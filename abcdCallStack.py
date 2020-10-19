@@ -26,4 +26,4 @@ def d():
     print('d() returns.')
 
 a()
-print('Writing to create conflict')
+print('Boom Baam')
