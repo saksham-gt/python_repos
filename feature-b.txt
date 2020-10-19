@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 This is feature b and it was fucking meant to be merged with master branch.
+=======
+This is feature b and it was fucking meant to be merged with master branch. 
+>>>>>>> feature-a
