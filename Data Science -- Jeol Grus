@@ -1,0 +1,233 @@
+                                                                                                Data Science in Python 
+                                                                                                                -- Joel Grus
+CH-2 : A CRASH COURSE IN PYTHON
+
+MODULES :-
+1. Using alias to do import a module (maybe cuz module has an unwieldy name or if you're typing a lot)
+   Ex: import matplotlib.pyplot as plt
+
+2. If you want to import a specific value from a particular module.
+   Ex: from collections import defaultdict, Counter
+   
+ARITHMETIC :-
+1. Suppose we want output of 5/2 to be 2.5 not 2 (btw python by default uses integer div.)
+   so we would import : from _future_ import division. now 5/2 = 2.5
+   and for integer div use double slash(//) : 5//2 = 2
+   
+FUNCTIONS :-
+1. It is easy to create short anonymous functions or lambdas:
+   y = apply_to_one(lambda x: x+4)      # equals 5
+   Although, most people will tell you to just use def instead of lambda.
+   another_double = lambda x: 2*x       # don't do this.
+   def another_double(x): return 2*x    # do this instead.
+   
+STRINGS :-
+1. tab_string = "\t"
+   len(tab_string)          # 1 since it is an escape character
+   not_tab_string = r"\t"   # it is a raw string and hence contains '\' and 't'.
+   len(not_tab_string)      # is 2
+   
+   for multiline strings use triple-[double]-quotes.
+   
+EXCEPTIONS :-
+    using try and except. 
+Ex : try:
+        print 0/0
+     except ZeroDivisionError:
+        print "cannot divide by zero"
+        
+LISTS :-
+1. Easy to concatenate lists together.
+   Ex: x = [1, 2, 3]
+       x.extend([4, 5, 6])          # x is now [1, 2, 3, 4, 5, 6]
+2. If you don't want to modify x.
+   Ex: x = [1, 2, 3]
+       y = x + [4, 5, 6]
+3. we append to list one item at a time frequently.
+   Ex: x = [1, 2, 3]
+       x.append(0)                  # x is now [1, 2, 3, 0]
+4. unpacking lists.
+   Ex: x, y = [1, 2]                # now x is 1, y is 2
+   Ex: _, y = [1, 2]                # now y == 2, didn't care about the first element.
+   
+TUPLES :-
+1. Tuples are a convenient way to return multiple values from functions.
+   Ex: def sum_and_product(x, y):
+           return (x+y),(x*y)
+       sp = sum_and_product(2, 3)   # equals (5, 6)
+       s, p = sum_and_product(5, 10) # s is 15, p is 50.
+2. Tuples and lists for multiple assignments.
+   Ex: x, y = 1, 2      
+       x, y = y, x      # pythonic way to swap variables.
+
+DICTIONARIES :-
+1. Ways to declare a dict.
+    empty_dict = {}
+    empty_dict2 = dict()
+    grades = {"Joel" : 80, "Tim" : 60}
+2. For the value of the key use square brackets.
+    x = grades["Joel"]  # x is 80.
+    
+    Ex. try:
+            kates_grade = grades["Kate"]
+        except KeyError:
+            print "No grades for Kate!"
+    
+    Ex. using .get to add the new element in the dict. if not present.
+    joels_grade = grades.get("Joel", 0)         # joels_grade is 80.
+    kates_grade = grades.get("Kate", 0)         # kates_grade is 0. as it set the value to 0 if element not present.
+3. Using defaultdict 
+   A defaultdict is like a regular dictionary, except that when you try to look up a key it doesn’t contain, it first adds a value for it using a zero-argument function you provided when you created it. In order to use defaultdicts, you have to import them from collections:
+   Ex:
+    from collections import defaultdict
+    word_counts = defaultdict(int)
+    for word in document:
+    word_counts[word] += 1                                                  # int() produces 0
+    They can also be useful with list or dict or even your own functions:
+    dd_list = defaultdict(list)                                             # list() produces an empty list
+    dd_list[2].append(1)                                                    # now dd_list contains {2: [1]}
+    
+    dd_dict = defaultdict(dict)                                             # dict() produces an empty dict
+    dd_dict["Joel"]["City"] = "Seattle"                                     # { "Joel" : { "City" : Seattle"}}
+    
+    dd_pair = defaultdict(lambda: [0, 0])
+    dd_pair[2][1] = 1                                                       # now dd_pair contains {2: [0,1]}
+    
+4. Using Counter in dictionaries :
+   from collections import Counter
+   c = Counter([0, 1, 2, 0])                                                # c is basically {0: 2, 1: 1, 2: 1}
+   
+SETS :-
+1. represents distinct elements.
+   s = set()
+   s.add(1)             # s is {1}
+   s.add(2)             # s is {1, 2}
+   s.add(2)             # s is still {1, 2}
+   
+SORTING :-
+1.  x = [4,1,2,3]
+    y = sorted(x)       # is [1,2,3,4], x is unchanged
+    x.sort()            # now x is [1,2,3,4]
+    And instead of comparing the elements themselves, you can compare the results of a function that you specify with key:
+    
+    # sort the list by absolute value from largest to smallest
+    x = sorted([-4,1,-2,3], key=abs, reverse=True) # is [-4,3,-2,1]
+    
+    # sort the words and counts from highest count to lowest
+    wc = sorted(word_counts.items(), key=lambda (word, count): count, reverse=True)
+
+LIST COMPREHENSIONS :-
+1. transforming lists to another lists.
+    Ex: even_numbers = [x for x in range(5) if x%2 == 0]                 # even_numbers is [0, 2, 4]
+2. transforming lists to dictionaries or sets.
+    Ex: square_dict = { x : x*x  for x in range(5)}                      # square_dict is [0:0, 1:1, 2:4, 3:9, 4:16}
+        square_set = {x*x for x in [-1, 1]}                               # square_set is {1}
+
+GENERATORS AND ITERATORS :-
+1. A generator is sth that you can iterate over but whose value are produced only as needed.
+2. One way to create generators is with functions and yield operator:
+    Ex:
+    def lazy_range(n):
+        """a lazy version of range"""
+        i = 0
+        while i<n
+            yield i
+            i+=1
+3. A second way to create generators is by using comprehensions wrapped in "parenthesis" (when we want to iterate more than 1 time)
+    Ex:
+    lazy_evens_below_20 = (i for i in lazy_range(20) if i%2 == 0)
+    
+RANDOMNESS :-
+1. import random 
+    The random module actually produces pseudorandom (that is, deterministic) numbers based on an internal state that you can set with random.seed if you want to get reproducible results:
+    random.seed(10)                                                 # set the seed to 10
+    print random.random()                                           # 0.57140259469
+    random.seed(10)                                                 # reset the seed to 10
+    print random.random()                                           # 0.57140259469 again
+2. sometimes use randrange which can take ypto 2 arguments.
+    Ex: random.randrange(10)                                        # [0, 1,...,9]
+        ranom.randrange(3, 6)                                       # [3, 4, 5]
+    3. up_to_10 = range(10)
+       random.shuffle() [shuffles the list elements] and x = random.choice() [choose random element from list/dict, etc.]
+       x = random.sample(up_to_10, 6) [number of elements to sample out without repeating] and x = [random.choice(up_to_10) for _ in range(4)]      #if we don't care whether selected element is repeated then .choice.
+    
+REGULAR EXPRESSIONS :-
+1.to provide a way to search text.
+    import re
+   Ex:  all and any are truthy adn falsy kind of keywords. all returns TRUE when all elements in it are truthy and any returns TRUE if any of its elements is truthy.
+        print(all([not re.match("a", "match"),                      # True as "match" doesn't start with "a"
+        re.search("a", "cat"),                                      # True as "a" is present in "cat"
+        not re.search("c", "dog"),                                  # True as "c" is not found in "dog"
+        3 == len(re.split("[ab]", "carbs")),                        # True as if we split "[ab]" from "carbs" it is left with ("c", "r", "s")
+        "R-D-" == re.sub("[0-9]", "-", "R2D2")])                    # True as if we substitute all digits in "R2D2" from "-" then it will be "R-D-"
+        # hence will return True
+
+OBJECT-ORIENTED PROGRAMMING :-
+1. For cleaner and simpler code we use this concept.
+   Ex:
+    class Set:
+        def __init__(self, values=None):
+            #This is a constructor. It gets called when you create a new Set. You would like to use it to initialize. ex => s1 = Set(), s2 = Set([1, 3, 2, 2])
+            if values is not None:
+                for value in values:
+                    self.add(value)
+        def __repr__(self):
+            # This is the string representation of a Set object if you type it at the Pytohn prompt or pass it to str()
+            return "Set: "+ str(self.dict.keys())
+        def add(self, value):
+            self.dict[value] = True
+        def contains(self, value):
+            return value in self.dict
+        def remove(self, value):
+            del self.dict[value]
+    s = Set([1, 2, 3])
+    s.add(4)
+    print(s.contains(4))        # True
+    s.remove(3)
+    print(s.contains(3))        # False
+    
+FUNCTION TOOLS :-
+1. partial:                     # we want a function to calculate the exponent of power of two.
+    from functools import partial
+    def exp(base, power):               # now in this function we have to take input 2 arguments, thoughw e know that base is 2 still we need to input 2 everytime. To convert it to less number of arguments we use partial.
+        return base ** power
+    def two_to_the(power):              # we dont want to use this function
+        return exp(2, power)
+    # instead we use this.
+    two_to_the = partial(exp, base = 2) #syntax of partial is partial(function, remaining argument to pass in this function) like here 
+    print(two_to_the(3))                #8
+2. using map with multiple-argument functions if you provide multiple lists:
+    Ex:
+    def double(x):
+        return 2*x
+    xs = [1, 2, 3, 4]
+    twice_xs = [double(x) for x in xs]          #instead of doing this i.e. to use for loop we can use map.
+    #instead
+    twice_xs = map(double, xs)                  # it implies that for every element in xs (2nd arg) pass it in double(x) function and store its value in twice_xs.\
+    #to print it in form of list
+    print(list(twice_xs))
+    #to print it in set, and so on.
+    print(Set(twice_xs))
+3. using filter for list comprehensions and displays results for if loop in a way:
+    Ex:
+        def is_even(x):
+            return if x%2==0    # True if x is even else false.
+        xs = [1, 2, 3, 4]
+        x_evens = [x for x in xs if is_even(x)]         # here if is_even(x) returns either True or False is True then the value is stored in the list else it won't
+        #instead we can do 
+        x_evens = filter(is_even, xs)                   # for each element in xs pass it to is_even and if true (like it acts as a filter) then it is stored in  x_evens.
+4. using reduce that is used to convert all the elements of a list into a single number (like it can multiply all and output the result, etc.)
+    Ex:
+        xs = [1, 2, 3, 4]
+        def multiply(x, y): return x*y
+        x_product = reduce(multiply, xs)            # 1*2*3*4 = 24    # like pass al the elements of xs in multiply function and reduce it to a single value.
+        #or we can do
+        list_product = partial(reduce, multiply)        # function that reduces a list
+        x_product = list_product(xs)
+
+    
+    
+    
+    
+    
+        

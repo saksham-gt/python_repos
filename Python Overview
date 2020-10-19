@@ -1,0 +1,31 @@
+Python Overview : 
+
+#Exception Handling :
+    Using Try and Except
+    Ex:
+        try: 
+            return 42/num
+        except ZeroDivisionError:
+            print("Invaid Argument")
+#Lists:
+    # Slicing:
+        a = [1, 2, 3, 4, 5]
+        >>a[0:2]
+        [1, 2, 3]
+    
+    # Multiple Assignment Trick:
+        cat = ['fat', 'gray', 'loud']
+        size, color,disposition = cat
+        then
+            size = 'fat', color = 'gray', disposition = 'loud'
+    # Using enumerate() function (Returns both index as well as its item)
+        supplies = ['pens', 'staplers', 'flamethrowers', 'binders']
+        for index, item in enumerate(supplies):
+            print(str(index) +" " + item)
+        Output:
+            0 pens
+            1 staplers
+            2 flamethrower
+            3 binders
+    #Using random.choice() andrandom.shuffle()
+    
