@@ -17,8 +17,9 @@ def collatz(number):
             print(number)
             collatz(number)
     else:
-        sys.exit()        
+        sys.exit()
 print('Enter number:')
 num = input()
 number = int(num)
 collatz(number)
+print('Hello GitHub!!')
